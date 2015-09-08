@@ -1,0 +1,44 @@
+%# appears in all pages
+%# included in default lauyout
+
+%# Variables {{{
+%# Fer el recompte de preguntes per examen i de preguntes per examen per bloc
+% my (@n_examen, @n_examen_bloc);
+% foreach my $examen (1..2) { 
+	% push @n_examen, $self->m_examen->count_examen($examen);
+	% foreach my $bloc (1..3) {
+		% push @n_examen_bloc, $self->m_examen->count_examen_bloc($examen,$bloc);
+	% }
+% }
+
+%# Escriure el missatge:
+% my $message = "$n_examen[0] preguntes diürn (" .
+%	"$n_examen_bloc[0] $n_examen_bloc[1] $n_examen_bloc[2]) " .
+% "$n_examen[1] preguntes nocturn (" .
+%	"$n_examen_bloc[3] $n_examen_bloc[4] $n_examen_bloc[5])";
+%# }}}
+
+%# Table {{{
+<div id="head">
+<table align="right" class="heading">
+	<tr>
+		<td><%= link_to Principal => '/index' %></td>
+		<td>|</td>
+		<td>Bloc</td>
+		<td><%= link_to 1 => '/preguntes/bloc/1' %></td>
+		<td><%= link_to 2 => '/preguntes/bloc/2' %></td>
+		<td><%= link_to 3 => '/preguntes/bloc/3' %></td>
+		<td>|</td>
+		<td>Examen</td>
+		<td><%= link_to Diürn   => '/preguntes/examen/1' %></td>
+		<td><%= link_to Nocturn => '/preguntes/examen/2' %></td>
+		<td>|</td>
+		<td><%= link_to 'Afegir Pregunta' => '/afegir' %></td>
+		<td>|</td>
+		<td class="error"><%== $message	%></td>
+	</tr>
+</table>
+</div>
+%# }}}
+
+%# vim: tabstop=2

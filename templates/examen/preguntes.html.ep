@@ -1,0 +1,43 @@
+% layout 'default';
+% title "Llista de Preguntes";
+
+<table border="1">
+  <colgroup>
+    <col style="width:1%">
+    <col style="width:6%">
+    <col style="width:1%">
+  </colgroup>
+<tr>
+  <th colspan="2">Exam M/T</td>
+  <th>B</td>
+  <th>Pregunta</td> 
+</tr>
+
+% while ( my $set = $pregs->next) {
+
+	% my $id				= $set->id_pregunta;
+	% my $exam_1		= $set->examen;
+	% my $exam_2		= $set->examen_2;
+	% my $bloc 			= $set->bloc;
+	% my $pregunta 	= $set->pregunta_cat;
+
+<tr>
+	<td>
+	%= form_for "/actual_exam" => (method => 'POST') => begin
+		%= submit_button 'ok'
+	</td>
+	<td>
+		%= input_tag 'update_examen_1', type => 'number', value => $exam_1, min => "0", max => "1", class => 'input_preg'
+		%= input_tag 'update_examen_2', type => 'number', value => $exam_2, min => "0", max => "1", class => 'input_preg'
+		%= hidden_field num_pregunta => $id
+		%= hidden_field url => $url
+	%end
+	</td>
+	<td><%= $bloc %></td>
+	<td><%= link_to $pregunta => '/respostes/' . $id %></td>
+</tr>
+
+% }
+</table>
+
+%# vim: tabstop=2  

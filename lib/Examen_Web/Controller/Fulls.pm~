@@ -1,0 +1,38 @@
+package Examen_Web::Controller::Fulls;
+use Mojo::Base 'Mojolicious::Controller';
+
+# Llista de fulls d'examen {{{
+sub llista {
+	my $self = shift;
+	my $permuta = $self->db->resultset('Permuta');
+
+	$self->render( permuta => $permuta );
+}
+# }}}
+
+# Full d'examen {{{
+sub examen {
+	my $self = shift;
+	my $opcio 	 		 = $self->stash('opcio');
+	my $perm_n   		 = $self->stash('permuta');
+	my $permuta  		 = $self->db->resultset('Permuta')->find({ id_permuta => $perm_n});
+	my $permutacions = $self->db->resultset('Permutacion')->search({ id_permuta => $perm_n});
+	my $preguntes		 = $self->db->resultset('Pregunte');
+	my $respostes 	 = $self->db->resultset('Resposte');
+
+	return $self->redirect_to( '/index' ) unless 
+		$self->m_examen->is_permuta($perm_n);
+
+	$self->render( 
+		opcio 	 		 => $opcio,
+		perm_n   		 => $perm_n,
+		permuta  		 => $permuta,
+		permutacions => $permutacions,
+		preguntes_rs => $preguntes,
+		respostes_rs => $respostes,
+	);
+}
+# }}}
+
+1;
+# vim: tabstop=2

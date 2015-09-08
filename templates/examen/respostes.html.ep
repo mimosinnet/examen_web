@@ -1,0 +1,73 @@
+% layout 'default';
+% title 'Pregunta amb Respostes';
+
+%# Variables {{{
+%	my $pregs 	  = $self->m_examen->find_pregunta($pregunta);
+%	my $resps 	  = $self->m_examen->find_respostes($pregunta);
+% my $bloc 		  = $pregs->bloc;
+% my $preg_cas	= $pregs->pregunta_cas;
+% my $preg_cat	= $pregs->pregunta_cat;
+% my $examen_1	= $pregs->examen;
+% my $examen_2	= $pregs->examen_2;
+
+% my $bloc_rs		= $self->m_examen->find_bloc($bloc);
+% my $next_rs;
+% while ($next_rs = $bloc_rs->next ) {
+% 	last if $next_rs->id_pregunta eq $pregunta;
+% }
+% $next_rs = $bloc_rs->next;
+% $next_rs = $bloc_rs->first unless defined $next_rs;
+% my $posterior = $next_rs->id_pregunta;
+%# }}}
+
+%# Taula inicial {{{
+<table>
+<tr>
+  <td><%= link_to "Bloc $bloc" => "/preguntes/bloc/$bloc" %></td>
+  <td>|</td>
+  <td><%= link_to 'Editar'     => "/editar/$pregunta" %></td>
+  <td>|</td>
+  <td><%= link_to '-→'         => "/respostes/$posterior" %></td>
+</tr>
+</table>
+%# }}}
+
+%= t p => "Bloc $bloc, Examen: Diürn: $examen_1 Nocturn: $examen_2"
+
+<table border="0">
+
+%# Preguntes {{{
+	<tr>
+		<td></td>
+	 	<td><strong><%= $preg_cat %></strong></td>
+	</tr>
+		<td></td>
+		<td><strong><%= $preg_cas %></strong></td>
+	</tr>
+%# }}}
+
+%# Respostes {{{
+% while ( my $set = $resps->next) {
+
+	% my $resp_cat 	= $set->resposta_cat;
+	% my $resp_cas	= $set->resposta_cas;
+	% my $correct		= $set->correcte;
+	% $correct =~ s/0/ /;
+	% $correct =~ s/1/→/;
+
+	<tr><td colspan="2"><hr /></td></tr>
+	<tr>
+		<td><%= "$correct" %></td>
+		<td><%= "$resp_cat" %></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= "$resp_cas" %></td>
+	</tr>
+% }
+
+%# }}}
+
+</table>
+
+%# vim: tabstop=2  

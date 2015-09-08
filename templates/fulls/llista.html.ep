@@ -1,0 +1,40 @@
+% layout 'default';
+
+<table align='center'>
+	<tr>
+		<th colspan="5">Fulls d'examen</th>
+	</tr>
+	<tr>
+		<th>Permutació</th>
+		<th>Horari</th>
+		<th>Idioma</th>
+		<th>Estudiants</th>
+		<th>Docents</th>
+	</tr>
+	% while ( my $set = $permuta->next ) {
+		% my $permuta = $set->id_permuta;
+		% my $horari_n = $set->examen;
+		% my $idioma_n = $set->idioma;
+		% my ($horari_t, $idioma_t);
+
+		% if ( $horari_n eq '1' ) { $horari_t = "matí";} 
+		% elsif ( $horari_n eq '2' ) {$horari_t = "tarda"; }
+
+		% if    ( $idioma_n eq '1' ) { $idioma_t = "cat"; }
+		% elsif ( $idioma_n eq '2' ) { $idioma_t = "cas"; }
+
+		<tr>
+			<td><%= "Permutació $permuta" %></td>
+			<td><%= "$horari_t" %></td>
+			<td><%= "$idioma_t" %></td>
+			<td>
+				%= link_to "Examen $permuta" => "/full/estudiant/$permuta"  
+			</td>
+			<td>
+				%= link_to "Examen $permuta" => "/full/docent/$permuta"  
+			</td>
+		</tr>
+	% }
+</table>
+
+%#  vim:  tabstop=2

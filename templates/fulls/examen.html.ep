@@ -1,0 +1,68 @@
+%# Has its own layout
+% layout 'examen';
+% title "Examen";
+
+%# Variables {{{
+%	my $permutacions = $self->m_examen->permutacions($perm_n);
+% my $preguntes_rs = $self->m_examen->table('Pregunte');
+% my $respostes_rs = $self->m_examen->table('Resposte');
+% my $idioma = $permuta->idioma;
+%# }}}
+
+%# Encapçalament en funció de l'idioma {{{
+% if ( $idioma eq '1') {
+%=  include 'headings/h_examen_cat';
+% } elsif ( $idioma eq '2') {
+%=  include 'headings/h_examen_cas';
+% }
+%# }}}
+
+%# Escriure Pregunta {{{
+% my $i = 1;
+% while ( my $set = $permutacions->next) {
+
+	% my $n_preg = $set->get_column('id_pregunta');
+	% my $pregunta_rs = $self->m_examen->find_pregunta($n_preg);
+
+	% my $pregunta;
+	% if ( $idioma eq '1') { $pregunta 	= $pregunta_rs->pregunta_cat; } 
+	% elsif ( $idioma eq '2') { $pregunta 	= $pregunta_rs->pregunta_cas; }
+
+	%# Escrivim la preunta:
+	%= t p => "$i.- $pregunta"
+
+	%# Escriure resposta {{{
+
+	% my @respostes;
+	% foreach my $n_resp ( $set->resp_a, $set->resp_b, $set->resp_c, $set->resp_d ) {
+
+	%	my $resps_rs = $self->m_examen->find_resposta($n_resp);
+
+	% 	my $correcte = "";
+	% 	$correcte = $resps_rs->correcte if $opcio eq 'docent';
+	%		$correcte =~ s/0//;
+	%		$correcte =~ s/1/→/;
+
+ 	% 	my $resp;
+	%		if ( $idioma eq '1') { $resp = $resps_rs->resposta_cat;}
+	% 	elsif ( $idioma eq '2') { $resp = $resps_rs->resposta_cas;}
+
+	%		push @respostes, "$correcte $resp";
+
+	% }
+
+	<ol type="a">
+	% foreach my $resp (@respostes) {
+		<li><%= "$resp" %></li>
+	% }
+	</ol>
+
+	%# }}}
+
+
+	% $i++;
+% }
+
+%# }}}
+
+%# vim: tabstop=2  

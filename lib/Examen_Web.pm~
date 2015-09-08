@@ -1,0 +1,38 @@
+package Examen_Web;
+use Mojo::Base 'Mojolicious';
+use Examen_Web::Schema;
+
+has schema => sub {
+	return Examen_Web::Schema->connect('dbi:SQLite:dbname=data/examen.db', '', '', 
+		{sqlite_unicode => 1 } 
+	) || die "Cannot connect";
+};
+
+# This method will run once at server start
+sub startup {
+  my $self = shift;
+
+	$self->helper(db 				=> sub { $self->app->schema });
+	$self->helper(respostes => sub {
+					my $self 	= shift;
+					my $id		= shift;
+					return $self->id_pregunta;
+			});
+
+  # Router
+  my $r = $self->routes;
+
+  # Normal route to controller
+  $r->get('/')->to('examen#index');
+  $r->get('/index')->to('examen#index');
+  $r->get('/preguntes/:opcio')->to('examen#preguntes');
+	$r->get('/preg_resp')->to('examen#preg_resp');
+	$r->get('/respostes/:num_pregunta')->to('examen#respostes');
+	$r->get('/editar/:num_pregunta')->to('examen#editar');
+	$r->post('/actual_preg')->to('examen#actual_preg');
+	$r->post('/actual_resp')->to('examen#actual_resp');
+}
+
+1;
+
+# vim: tabstop=2

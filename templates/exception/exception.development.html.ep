@@ -1,0 +1,6 @@
+% layout 'default';
+% title "exception.development";
+
+%= t h1 => "exception.development"
+
+%# vim: tabstop=2  

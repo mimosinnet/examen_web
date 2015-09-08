@@ -1,0 +1,81 @@
+% layout 'default';
+% title 'Editar pregunta';
+
+%# Variables {{{
+%# Una preg, moltes resps
+%	my $preg_rs   = $self->m_examen->find_pregunta($pregunta);
+%	my $resps_rs  = $self->m_examen->find_respostes($pregunta);
+%	my $correctes	= $resps_rs->get_column('correcte')->sum;
+% my $preg_cas  = $preg_rs->pregunta_cas;
+% my $preg_cat  = $preg_rs->pregunta_cat;
+% my $bloc 		  = $preg_rs->bloc;
+% my $exam_1    = $preg_rs->examen;
+% my $exam_2    = $preg_rs->examen_2;
+%# }}}
+
+<table border="0" width="100%" id="taula_editar">
+	<tr><td>Estàs editant la
+			%= link_to "pregunta $pregunta" => "/respostes/$pregunta"
+			, en el
+			%= link_to "Bloc $bloc" => "/preguntes/bloc/$bloc"
+			. (Recorda <strong>actualitzar</strong> els registres)
+	</td><tr>
+	
+	%# Preguntes {{{
+	<tr><td><hr /></td></tr>
+	<tr><td><strong>Preguntes:</strong></td></tr>
+	<tr><td>
+	%= form_for "/actual_preg" => (method => 'POST') => begin
+		%= input_tag 'update_preg_cat', type => 'text', value  => $preg_cat
+		%= input_tag 'update_preg_cas', type => 'text', value  => $preg_cas
+		<br />Bloc: 
+		%= input_tag 'update_bloc'    , type => 'number', value => $bloc => (min => "1") => (max => "3")
+		Examen Diürn: 
+		%= input_tag 'update_examen_1'  , type => 'number', value => $exam_1 => (min => "0") => (max => "1")
+		Nocturn:
+		%= input_tag 'update_examen_2'  , type => 'number', value => $exam_2 => (min => "0") => (max => "1")
+		%= submit_button 'Actualitza Pregunta'
+		%= hidden_field num_pregunta => $pregunta
+	%end
+	</tr></td>
+	<tr><td><hr /></td></tr>
+	%# }}}
+
+	%# Respostes {{{
+	<tr><td><strong>Respostes:</strong></td></tr>
+
+	% if ($correctes ne '1') {
+	<tr><td class="error">Error en el nombre de respostes correctes</td></tr>
+	<tr><td><hr /></td></tr>
+	% }
+
+	% while ( my $set = $resps_rs->next) {
+
+		%# Variables {{{
+		% my $resp_cat 	= $set->resposta_cat;
+		% my $resp_cas	= $set->resposta_cas;
+		% my $correct		= $set->correcte;
+		% my $num_resp  = $set->id;
+		%# }}}
+
+		%= form_for "/actual_resp" => (method => 'POST') => begin
+			<tr><td>Català: <%= input_tag 'update_resp_cat', type => 'text', value => $resp_cat %></td></tr>
+			<tr><td>Castellà: <%= input_tag 'update_resp_cas', type => 'text', value => $resp_cas %></td></tr>
+			<tr><td>Correcte: 
+			%= input_tag 'update_correct', type => 'number', value => $correct => (min => "0") => (max => "1")
+			%= hidden_field num_resposta => $num_resp
+			%= hidden_field num_pregunta => $pregunta
+			%= submit_button 'Actualitza Resposta'
+			</td></tr>
+		%end
+	
+	<tr><td><hr /></td></tr>
+
+	% }
+	</td></tr>
+	<tr><td><hr /></td></tr>
+	%# }}}
+
+</table>
+
+%# vim: tabstop=2 

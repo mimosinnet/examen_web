@@ -1,0 +1,15 @@
+%= t h1 => "Psicologia Social del Món Contemporani"
+%= t h2 => "Full d'examen, Diürn, Curs 2014-15, EV4"
+<table border="1" cellpadding="5" class="examen">
+	<tr>
+		<td>Cognoms:</td>
+		<td>Nom:</td>
+	</tr>
+		<td>DNI:</td>
+		<td>NIU:</td>
+	</tr>
+</table>
+
+
+
+%# vim: tabstop=2 

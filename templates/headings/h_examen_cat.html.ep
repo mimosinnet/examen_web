@@ -1,0 +1,27 @@
+%= t h1 => "Psicologia Social del Món Contemporani Curs 2014-15"
+<h2>Full d'examen,
+	%= "Diürn" if $examen eq 1;
+	%= "Nocturn" if $examen eq 2;
+	EV4, <ins>Permutació <%= $perm_n %></ins></h2>
+<table border="1" cellpadding="5" class="examen">
+	<tr>
+		<td>Cognoms:</td>
+		<td>Nom:</td>
+	</tr>
+		<td>DNI:</td>
+		<td>NIU:</td>
+	</tr>
+</table>
+
+%= t h4 =>"Instruccions:"
+<ul>
+<li>Llegeix atentament els enunciats i les opcions de resposta.</li>
+<li>Només hi ha una resposta correcta per pregunta.</li>
+<li>Marqueu la vostra opció en aquestes fulles. Si canvieu d'opció, indiqueu clarament quina és la resposta definitiva.</li>
+<li>Després de contestar a totes les preguntes, passeu les respostes al full de resposta per a la correcció.</li>
+<li>Si no coincideixen les respostes del full de correcció i del full d'examen, es prendrà com a vàlida la resposta del full d'examen.</li>
+<li>Cada quatre respostes incorrectes, se'n descompte una. Les preguntes no contestades no afecten a la puntuació.</li>
+</ul>
+<hr />
+
+%# vim: tabstop=2 

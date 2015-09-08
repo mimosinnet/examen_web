@@ -1,0 +1,205 @@
+package Examen_Web::Controller::Examen;
+use Mojo::Base 'Mojolicious::Controller';
+use List::Util qw(shuffle);
+
+# atenció: distingir entre "find_resposta" i "find_respostes"
+
+# Preguntes {{{
+sub preguntes {
+	my $self  = shift;
+	my $opcio = $self->stash('opcio');
+	my $num   = $self->stash('num');
+	my $pregs;
+	$pregs = $self->m_examen->find_bloc(   $num ) if $opcio eq 'bloc';
+	$pregs = $self->m_examen->find_examen( $num ) if $opcio eq 'examen';
+
+	return $self->redirect_to('/index') unless 
+			$opcio =~ /bloc|examen/ and $num =~ /[123]/ ; 
+
+  $self->render(
+		url		=> "/preguntes/$opcio/$num",
+		pregs => $pregs,
+  );
+}
+# }}}
+
+# Mostra preguntes amb respostes {{{
+sub respostes {
+  my $self    = shift;
+  my $id      = $self->stash('num_pregunta');
+
+  $self->render(
+    pregunta  => $id,
+  );
+} 
+# }}}
+
+# editar {{{
+sub editar {
+	my $self 		  = shift;
+	my $id			  = $self->stash('num_pregunta');
+
+  $self->render( pregunta => $id );
+}
+# }}}
+
+# Update exam data {{{
+
+# questions
+sub actual_preg {
+	my $self 		   = shift;
+	my $id			   = $self->param('num_pregunta');
+	my $upda_cas	 = $self->param('update_preg_cas');
+	my $upda_cat	 = $self->param('update_preg_cat');
+	my $upda_blc	 = $self->param('update_bloc');
+	my $upda_exm_1 = $self->param('update_examen_1');
+	my $upda_exm_2 = $self->param('update_examen_2');
+	my $pregs_rs = $self->m_examen->find_pregunta($id);
+
+	$pregs_rs->update({
+		'pregunta_cas' => $upda_cas,
+		'pregunta_cat' => $upda_cat,
+		'bloc'				 => $upda_blc,
+		'examen'			 => $upda_exm_1,
+		'examen_2'		 => $upda_exm_2,
+	});
+
+	$self->redirect_to("/editar/$id");
+}
+
+# answers
+sub actual_resp {
+	my $self 		 = shift;
+	my $id_resp	 = $self->param('num_resposta');
+	my $id_preg  = $self->param('num_pregunta');
+	my $upda_cas = $self->param('update_resp_cas');
+	my $upda_cat = $self->param('update_resp_cat');
+	my $upda_cor = $self->param('update_correct');
+	my $resp_rs  = $self->m_examen->find_resposta($id_resp);
+
+	$resp_rs->update({
+		'resposta_cas' => $upda_cas,
+		'resposta_cat' => $upda_cat,
+		'correcte'		 => $upda_cor,
+	});
+
+	$self->redirect_to("/editar/$id_preg");
+
+}
+
+# if the question goes to the final exam
+sub actual_exam {
+	my $self 		   = shift;
+	my $id			   = $self->param('num_pregunta');
+	my $upda_exm_1 = $self->param('update_examen_1');
+	my $upda_exm_2 = $self->param('update_examen_2');
+	my $url 			 = $self->param('url');
+	my $preg_rs  	 = $self->m_examen->find_pregunta($id);
+	$preg_rs->update({
+		'examen'	 => $upda_exm_1,
+		'examen_2' => $upda_exm_2,
+	});
+
+	$self->redirect_to( $url );
+}
+
+# }}}
+
+# Add Record {{{
+sub afegir {
+	my $self 		  = shift;
+
+	# add questions
+	my $pregunta_ma = $self->db->resultset('Pregunte')->create({
+		pregunta_cas	=> 'Pregunta en castellano',
+		pregunta_cat	=> 'Pregunta en català',
+		bloc					=> '1',
+		examen				=> '0',
+		examen_2			=> '0',
+	});
+
+	# add four optons in answers
+	foreach (1..4) {
+		my $respostes_ma = $pregunta_ma->create_related(respostes => {
+			'resposta_cas' => 'Respuesta en castellano',
+			'resposta_cat' => 'Resposta en català',
+			'correcte'		 => '0',
+		});
+	}
+
+	# The added question should be the last
+	my $id_preg = $self->db->resultset('Pregunte')->count;
+
+	$self->redirect_to("/editar/$id_preg");
+
+}
+# }}}
+
+# Permutacions {{{
+sub crear_permuta {
+	my $self 		   		= shift;
+
+	# número de permutacions, idioma, examen
+	# català = 1, castellà = 2
+	my @permuta_def = ( 
+		[$self->param('permuta_cat_1'), 1, 1],
+		[$self->param('permuta_cas_1'), 2, 1],
+		[$self->param('permuta_cat_2'), 1, 2],
+		[$self->param('permuta_cas_2'), 2, 2],
+	);
+
+	# Fem servir la taula Preguntes, doncs la taula examen ens dona registres duplicats
+	my @pregs_1      = $self->db->resultset('Pregunte')->search({ examen => 1  })->get_column('id_pregunta')->all;
+	my @pregs_2      = $self->db->resultset('Pregunte')->search({ examen_2 => 1  })->get_column('id_pregunta')->all;
+	my $permuta      = $self->db->resultset('Permuta');
+	my $permutacions = $self->db->resultset('Permutacion');
+
+	$permuta->delete_all;
+	$permutacions->delete_all;
+
+	# Crea la taula amb el número de permutacions {{{
+	foreach my $n_perm (@permuta_def) {
+		for ( my $i = 1; $i < $n_perm->[0] + 1; $i++) {
+			my $crea_reg = $permuta->create({
+				idioma 	=> $n_perm->[1],
+				examen	=> $n_perm->[2],
+			});
+			# Crea les preguntes per a cada permutació {{{
+			if ( $n_perm->[2] eq '1' ) {
+				foreach my $n_preg ( shuffle @pregs_1 ) {
+						my @resps = $self->db->resultset('Examen')->search({ id_pregunta => $n_preg })->get_column('id')->all;
+						@resps = shuffle @resps;
+						$crea_reg->create_related( permutacions => {
+							id_pregunta => $n_preg,
+							resp_a 			=> $resps[0],
+							resp_b 			=> $resps[1],
+							resp_c 			=> $resps[2],
+							resp_d 			=> $resps[3],
+						});
+				}
+			} elsif ( $n_perm->[2] eq '2' ) {
+				foreach my $n_preg ( shuffle @pregs_2 ) {
+						my @resps = $self->db->resultset('Examen2')->search({ id_pregunta => $n_preg })->get_column('id')->all;
+						@resps = shuffle @resps;
+						$crea_reg->create_related( permutacions => {
+							id_pregunta => $n_preg,
+							resp_a 			=> $resps[0],
+							resp_b 			=> $resps[1],
+							resp_c 			=> $resps[2],
+							resp_d 			=> $resps[3],
+						});
+				}
+			} else { $self->redirect_to( template => 'examen/exception' ); }
+			# }}}
+		}
+	}
+
+	# }}}
+
+	$self->redirect_to("/index");
+
+}
+# }}}
+
+1;
+# vim: tabstop=2

@@ -1,0 +1,27 @@
+%= t h1 => "Psicologia Social del Món Contemporani Curs 2014-15"
+<h2>Hoja de examen, 
+	%= "Diurno" if $examen eq 1;
+	%= "Nocturno" if $examen eq 2;
+	EV4, <ins>Permutación <%= $perm_n %></ins></h2>
+<table border="1" cellpadding="5" class="examen">
+	<tr>
+		<td>Apellidos:</td>
+		<td>Nombre:</td>
+	</tr>
+		<td>DNI:</td>
+		<td>NIU:</td>
+	</tr>
+</table>
+
+%= t h4 =>"Instrucciones:"
+<ul>
+<li>Lee atentamente los enunciados y las opciones de respuesta.
+<li>Sólo hay una respuesta correcta por pregunta.
+<li>Marca la opción de respuesta en estas hojas. Si cambiáis de opción, indicar claramente cuál es vuestra respuesta definitiva.
+<li>Después de contestar a todas las preguntas, pasar las respuestas a la hoja de corrección. 
+<li>Si no coinciden las respuestas de la hoja de examen y de la de corrección, se considerará como respuesta emitida la de la hoja de examen.
+<li>Cada cuatro preguntas incorrectas se resta una. Las preguntas no contestadas no afectan a la puntuación.
+</ul>
+<hr />
+
+%# vim: tabstop=2 
