@@ -2,28 +2,32 @@
 % title 'Pregunta amb Respostes';
 
 %# Variables {{{
-% my $pregunta 	= $pregs->id_pregunta;
-% my $anterior	= $pregunta - 1;
-% my $posterior = $pregunta + 1;
+%	my $pregs 	  = $self->m_examen->find_pregunta($pregunta);
+%	my $resps 	  = $self->m_examen->find_respostes($pregunta);
+% my $bloc 		  = $pregs->bloc;
 % my $preg_cas	= $pregs->pregunta_cas;
 % my $preg_cat	= $pregs->pregunta_cat;
-% my $bloc 		  = $pregs->bloc;
 % my $examen_1	= $pregs->examen;
 % my $examen_2	= $pregs->examen_2;
-% $anterior  = $preguntes if $anterior == 0;
-% $posterior = 1 if $posterior > $preguntes;
+
+% my $bloc_rs		= $self->m_examen->find_bloc($bloc);
+% my $next_rs;
+% while ($next_rs = $bloc_rs->next ) {
+% 	last if $next_rs->id_pregunta eq $pregunta;
+% }
+% $next_rs = $bloc_rs->next;
+% $next_rs = $bloc_rs->first unless defined $next_rs;
+% my $posterior = $next_rs->id_pregunta;
 %# }}}
 
 %# Taula inicial {{{
 <table>
 <tr>
-	<td><%= link_to '←-' 				 => $anterior %></td>
-	<td>|</td>
-	<td><%= link_to "Bloc $bloc" => "/preguntes/bloc/$bloc" %></td>
-	<td>|</td>
-	<td><%= link_to 'Editar' 		 => "/editar/$pregunta" %></td>
-	<td>|</td>
-	<td><%= link_to '-→' 				 => $posterior %></td>
+  <td><%= link_to "Bloc $bloc" => "/preguntes/bloc/$bloc" %></td>
+  <td>|</td>
+  <td><%= link_to 'Editar'     => "/editar/$pregunta" %></td>
+  <td>|</td>
+  <td><%= link_to '-→'         => "/respostes/$posterior" %></td>
 </tr>
 </table>
 %# }}}

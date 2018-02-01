@@ -1,4 +1,4 @@
-%= t h1 => "Psicologia Social del Món Contemporani Curs 2014-15"
+%= t h1 => "Psicologia Social del Món Contemporani Curs 2016-17"
 <h2>Hoja de examen, 
 	%= "Diurno" if $examen eq 1;
 	%= "Nocturno" if $examen eq 2;

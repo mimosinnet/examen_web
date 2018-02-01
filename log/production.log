@@ -1,0 +1,52 @@
+[Thu Jun  4 00:18:33 2015] [info] Listening at "http://*:8082"
+[Thu Jun  4 00:18:33 2015] [info] Manager 17850 started
+[Thu Jun  4 00:18:33 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Mon Jun  8 23:49:11 2015] [info] Listening at "http://*:8082"
+[Mon Jun  8 23:49:11 2015] [info] Manager 18411 started
+[Mon Jun  8 23:49:11 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Wed Jun 10 00:48:11 2015] [info] Listening at "http://*:8082"
+[Wed Jun 10 00:48:11 2015] [info] Manager 25791 started
+[Wed Jun 10 00:48:11 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Wed Jun 10 13:12:48 2015] [info] Starting zero downtime software upgrade
+[Wed Jun 10 13:12:49 2015] [info] Listening at "http://*:8082"
+[Wed Jun 10 13:12:49 2015] [info] Manager 29686 started
+[Wed Jun 10 13:12:49 2015] [info] Upgrade successful, stopping 25791
+[Wed Jun 10 13:12:51 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Thu Jun 11 16:59:24 2015] [info] Starting zero downtime software upgrade
+[Thu Jun 11 16:59:24 2015] [info] Listening at "http://*:8082"
+[Thu Jun 11 16:59:24 2015] [info] Manager 17085 started
+[Thu Jun 11 16:59:24 2015] [info] Upgrade successful, stopping 29686
+[Thu Jun 11 16:59:27 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Thu Jun 11 21:32:27 2015] [info] Starting zero downtime software upgrade
+[Thu Jun 11 21:32:27 2015] [info] Listening at "http://*:8082"
+[Thu Jun 11 21:32:27 2015] [info] Manager 18903 started
+[Thu Jun 11 21:32:27 2015] [info] Upgrade successful, stopping 17085
+[Thu Jun 11 21:32:29 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Thu Jun 11 21:34:12 2015] [error] Worker 18907 has no heartbeat, restarting
+[Mon Jun 15 00:06:48 2015] [error] Worker 18904 has no heartbeat, restarting
+[Mon Jun 29 13:45:51 2015] [info] Starting zero downtime software upgrade
+[Mon Jun 29 13:45:52 2015] [info] Listening at "http://*:8082"
+[Mon Jun 29 13:45:52 2015] [info] Manager 19031 started
+[Mon Jun 29 13:45:52 2015] [info] Upgrade successful, stopping 18903
+[Mon Jun 29 13:45:54 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Tue Jul 28 10:37:46 2015] [info] Listening at "http://*:8082"
+[Tue Jul 28 10:37:46 2015] [info] Manager 1871 started
+[Tue Jul 28 10:37:46 2015] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Wed Apr 27 15:52:19 2016] [info] Listening at "http://*:8082"
+[Wed Apr 27 15:52:19 2016] [info] Manager 8947 started
+[Wed Apr 27 15:52:19 2016] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Thu Apr 28 10:50:25 2016] [info] Starting zero downtime software upgrade
+[Thu Apr 28 10:50:25 2016] [info] Listening at "http://*:8082"
+[Thu Apr 28 10:50:25 2016] [info] Manager 27016 started
+[Thu Apr 28 10:50:26 2016] [info] Upgrade successful, stopping 8947
+[Thu Apr 28 10:50:28 2016] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Wed Jun  1 11:32:11 2016] [error] Worker 27018 has no heartbeat, restarting
+[Thu Jun  2 11:07:19 2016] [error] Worker 27020 has no heartbeat, restarting
+[Thu Jun  2 11:08:40 2016] [error] Worker 14994 has no heartbeat, restarting
+[Thu Jun  2 11:08:58 2016] [error] Worker 27019 has no heartbeat, restarting
+[Thu Jun  2 11:10:19 2016] [error] Worker 2268 has no heartbeat, restarting
+[Thu Jun  2 11:18:44 2016] [error] Worker 2272 has no heartbeat, restarting
+[Sat May 27 00:19:15 2017] [info] Listening at "http://*:8082"
+[Sat May 27 00:19:15 2017] [info] Manager 767 started
+[Sat May 27 00:19:15 2017] [info] Creating process id file "hypnotoad_examen_web.pid"
+[Thu Jun  1 23:18:14 2017] [error] Worker 769 has no heartbeat, restarting

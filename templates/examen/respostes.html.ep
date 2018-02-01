@@ -27,7 +27,7 @@
   <td>|</td>
   <td><%= link_to 'Editar'     => "/editar/$pregunta" %></td>
   <td>|</td>
-  <td><%= link_to '-→'         => "/respostes/$posterior" %></td>
+  <td><%= link_to '→'         => "/respostes/$posterior" %></td>
 </tr>
 </table>
 %# }}}

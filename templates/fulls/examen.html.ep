@@ -28,8 +28,9 @@
 	% if ( $idioma eq '1') { $pregunta 	= $pregunta_rs->pregunta_cat; } 
 	% elsif ( $idioma eq '2') { $pregunta 	= $pregunta_rs->pregunta_cas; }
 
-	%# Escrivim la preunta:
-	%= t p => "$i.- $pregunta"
+	<div style="page-break-inside: avoid; padding: 0; margin: 0; ">
+	%# Escrivim la pregunta:
+	<p style="margin: 10px 0 0 0"><b><%= "$i.- $pregunta" %></b></p>
 
 	%# Escriure resposta {{{
 
@@ -51,12 +52,13 @@
 
 	% }
 
-	<ol type="a">
+	<ol style="margin: 0" type="a">
 	% foreach my $resp (@respostes) {
 		<li><%= "$resp" %></li>
 	% }
 	</ol>
 
+	</div>
 	%# }}}
 
 
