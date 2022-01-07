@@ -4,7 +4,8 @@ Examen web uses [Mojolicious](https://mojolicious.org/) web framework to add and
 
 # Installation
 
-    Install [perlbrew](https://perlbrew.pl/), following the instructions in the web page.
+Install [perlbrew](https://perlbrew.pl/), following the instructions in the web page.
+
     $ perlbrew install perl-5.30.3 (it works with this perl version)
     $ perlbrew switch perl-5.30.3
     $ perlbrew install-cpanm
@@ -18,7 +19,7 @@ Examen web uses [Mojolicious](https://mojolicious.org/) web framework to add and
     $ cp 'file with the database' data
     $ morbo script/examen__web (testing)
 
-    Write in your broser: localhost:3000
+Write in your broser: localhost:3000
 
 # Production
 
