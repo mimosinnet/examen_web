@@ -1,6 +1,6 @@
 # examen_web
 
-Examen web uses Mojolicious to keep the questions and answers of an exam and to create different permutations for different groups. This implementation uses perlbrew to set the perl version and installs dependencies with cpanm. It can export the questions and answers in AIKEN and GIFT formats.
+Examen web uses [Mojolicious](https://mojolicious.org/) web framework to add and edit questions for an exam and to create different permutations for different groups. This implementation uses perlbrew to set the perl version and installs dependencies with cpanm. It can export the questions and answers in AIKEN and GIFT formats.
 
 # Installation
 
@@ -19,6 +19,12 @@ Examen web uses Mojolicious to keep the questions and answers of an exam and to 
     $ morbo script/examen__web (testing)
 
     Write in your broser: localhost:3000
+
+# Production
+
+  To run the application in production, it runs in port 8082 (assuming a reverse proxy) as defined in the *examen__web.conf* configuration file. 
+
+  $ hypnotoad script/examen__web 
 
 # Support
 
