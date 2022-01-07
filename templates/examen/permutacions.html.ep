@@ -4,37 +4,23 @@
 %= form_for "/crear_permuta" => (method => 'POST') => begin
 <table border="1" align="center">
 <tr>
-  <th colspan="2">Examen Nocturn</td>
+  <th colspan="2">Definir Permutacions</td>
 </tr>
 <tr>
 	<td>Número de Permutacions Català:</td>
 	<td>
-		%= input_tag 'permuta_cat_1', type => 'number', value => "1", min => "1", max => "9", class => 'input_preg'
+		%= input_tag 'permuta_cat', type => 'number', value => "1", min => "1", max => "9", class => 'input_preg'
 	</td>
 </tr>
 <tr>
 	<td>Número de Permutacions Castellà:</td>
 	<td>
-		%= input_tag 'permuta_cas_1', type => 'number', value => "1", min => "1", max => "9", class => 'input_preg'
-	</td>
-</tr>
-<tr>
-  <th colspan="2">Examen Nocturn</td>
-</tr>
-<tr>
-	<td>Número de Permutacions Català:</td>
-	<td>
-		%= input_tag 'permuta_cat_2', type => 'number', value => "1", min => "1", max => "9", class => 'input_preg'
-	</td>
-</tr>
-<tr>
-	<td>Número de Permutacions Castellà:</td>
-	<td>
-		%= input_tag 'permuta_cas_2', type => 'number', value => "1", min => "1", max => "9", class => 'input_preg'
+		%= input_tag 'permuta_cas', type => 'number', value => "1", min => "1", max => "9", class => 'input_preg'
 	</td>
 </tr>
 <tr>
   <td colspan="2" align="center">
+  %= hidden_field id_assig => $id_assig
 	%= submit_button 'Crear Permutacions'
 	</td>
 </tr>

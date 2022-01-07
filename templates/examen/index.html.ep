@@ -1,23 +1,16 @@
-% layout 'default';
+% layout 'examen';
 
-%= t h1 => "Examen de Psicologia Social"
+%= t h1 => "Permutacions d'Examens";
 
-% my $bloc1 = $self->m_examen->count_bloc("1");
-% my $bloc2 = $self->m_examen->count_bloc("2");
-% my $bloc3 = $self->m_examen->count_bloc("3");
-
-<ul>
-	<li>Preguntes: <a href=/preguntes/bloc/1>Bloc 1</a> (
-	%= $bloc1
-	), <a href=/preguntes/bloc/2>Bloc 2</a> (
-	%= $bloc2
-	), <a href=/preguntes/bloc/3>Bloc 3</a> (
-	%= $bloc3
-	)</li>
-	<li>Examen: <a href=/preguntes/examen/1>Diürn</a>, <a href=/preguntes/examen/2>Nocturn<a></li>
-	<li><a href=/afegir>Afegir pregunta</a></li>
-	<li><a href=/permutacions>Crear permutacions</a></li>
-	<li><a href=/fulls_llista>Fulls d'examen</a></li>
-</ul>
+<table style="width:auto">
+  <tr><th>Codi</th><th>Blocs</th><th>Assignatura</th></tr>
+  % while ( my $set = $assig->hash ) {
+    <tr>
+      <td><%= $set->{'codi'}  %></td>
+      <td style="text-align:center"><%= $set->{'blocs'} %></td>
+      <td><a href="<%= '/' . $set->{'id'} . '/index' %>"><%= $set->{'assig'} %></a></td>
+    </tr>
+  % }
+</table>
 
 %#  vim:  tabstop=2

@@ -1,0 +1,32 @@
+%# Has its own layout
+% layout 'examen';
+% title "Preguntes Bloc $bloc";
+
+<h2>Preguntes bloc <%= $bloc %></h2>
+
+%# Escriure Pregunta {{{
+% my $i = 0;
+% while ( my $set = $preguntes->hash) {
+
+%   my $n_preg   = $set->{'id_pregunta'};
+%   my $pregunta = $set->{'pregunta_cat'}; 
+
+	<div style="page-break-inside: avoid; padding: 0; margin: 0; ">
+	%# Escrivim la pregunta:
+	<p style="margin: 10px 0 0 0"><b><%= ++$i . ".- $pregunta" %></b></p>
+
+	%# Escriure resposta {{{
+  % my $respostes = $self->model->resp_preg($n_preg);
+    <ol type="a" style='margin:0'>
+      % while (my $set_r = $respostes->hash) {
+          <li><%= $set_r->{'resposta_cat'} %></li>
+      % }
+    </ol>
+	</div>
+	%# }}}
+
+% }
+
+%# }}}
+
+%# vim: tabstop=2  

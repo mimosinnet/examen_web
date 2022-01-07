@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	%# Style {{{
+	<style>
+		table {
+			border-collapse: collapse;
+			border:	2px solid black;
+		}
+
+		td.heading {
+			padding: 60px; 
+		}
+
+		input[type='text'] {
+			width: 90%;
+			background: #FFFFCC;
+		}
+
+		input[type='number'] {
+			width: 25px;
+			background: #CCFFFF;
+		}
+
+		.error {
+			background: #FFCCFF;
+		}
+
+		table#taula_editar {
+			border: none;
+		}
+
+
+		#head {
+			position        : fixed;
+			top             : 0;
+			left            : 0;
+			width           : 100%;
+			background			: white;
+		}
+
+		#main {
+			margin          : 3em 1px 0em 1em;
+			background-color: white;
+		}
+
+	</style>
+	%# }}}
+  <head><title><%= title %></title></head>
+	%# body {{{
+  <body>
+
+	<div id="main">
+		<%= content %>
+	</div>
+	</body>
+	%# }}}
+</html>
+
+<!-- vim: tabstop=2 
+-->

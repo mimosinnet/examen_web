@@ -1,0 +1,41 @@
+% layout 'blanc';
+% title "Preguntes format GIFT";
+
+<h2>Preguntes format GIFT</h2>
+
+% while ( my $set = $preguntes->hash) {
+
+  % my $n_preg   = $set->{'id_pregunta'};
+  % my $pregunta = 'Error en posar pregunta';
+  % if ($lang eq 'cat') { $pregunta = $set->{'pregunta_cat'} } elsif ($lang eq 'cas') { $pregunta = $set->{'pregunta_cas'} }
+
+	<div style="page-break-inside: avoid; padding: 0; margin: 0">
+	%# Escrivim la pregunta:
+  <p><b><%= $pregunta %></b>{
+
+	%# Escrivim la resposta {{{
+  % my $respostes = $self->model->resp_preg($n_preg);
+      % my $resposta = "Error en posar respostes";
+      % while (my $set_r = $respostes->hash) {
+        % if ($set_r->{'correcte'}) { 
+          = 
+        % } else {
+          %%-25%
+        % }
+        % if ($lang eq 'cat') { $resposta = $set_r->{'resposta_cat'} } elsif ($lang eq 'cas') { $resposta = $set_r->{'resposta_cas'} }
+        %= $resposta
+        ~
+      % }
+        % if ($lang eq 'cat') { 
+          Resposta en blanc (no suma ni resta)
+        % } elsif ($lang eq 'cas') { 
+          Respuesta en blanco (no suma ni resta)
+        % } else {
+          Error
+        % }
+  }</p>
+	</div>
+	%# }}}
+
+% }
+

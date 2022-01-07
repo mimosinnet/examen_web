@@ -1,8 +1,5 @@
-%= t h1 => "Psicologia Social del Món Contemporani Curs 2016-17"
-<h2>Full d'examen,
-	%= "Diürn" if $examen eq 1;
-	%= "Nocturn" if $examen eq 2;
-	EV4, <ins>Permutació <%= $perm_n %></ins></h2>
+%= t h1 => $assig_nom . ", Curs 2020-21"
+<h2>Full d'examen, <ins>Permutació <%= $perm_n %></ins></h2>
 <table border="1" cellpadding="5" class="examen">
 	<tr>
 		<td>Cognoms:</td>

@@ -1,0 +1,34 @@
+% layout 'blanc';
+% title "Preguntes format AIKEN";
+
+<h2>Preguntes format AIKEN</h2>
+
+% while ( my $set = $preguntes->hash) {
+
+  % my $n_preg   = $set->{'id_pregunta'};
+  % my $pregunta = 'Error en posar pregunta';
+  % if ($lang eq 'cat') { $pregunta = $set->{'pregunta_cat'} } elsif ($lang eq 'cas') { $pregunta = $set->{'pregunta_cas'} }
+
+	<div style="page-break-inside: avoid; padding: 0; margin: 0">
+	%# Escrivim la pregunta:
+	<p><b><%= $pregunta %></b><br />
+
+	%# Escrivim la resposta {{{
+  % my $respostes = $self->model->resp_preg($n_preg);
+      % my %opcio = ( 1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D' );
+      % my $i = 0;
+      % my $resposta = "Error en posar respostes";
+      % my $answer   = 'Error en definir resposta correcta';
+      % while (my $set_r = $respostes->hash) {
+        %= "$opcio{++$i}. "
+        % if ($lang eq 'cat') { $resposta = $set_r->{'resposta_cat'} } elsif ($lang eq 'cas') { $resposta = $set_r->{'resposta_cas'} }
+        %= $resposta
+        % if ($set_r->{'correcte'}) { $answer = $opcio{$i} }
+        <br />
+      % }
+      ANSWER: <%= $answer %></p>
+	</div>
+	%# }}}
+
+% }
+

@@ -1,0 +1,45 @@
+%# Has its own layout
+% layout 'examen';
+% title "Respostes";
+
+%= t h1 => $assig_nom
+%= t h2 => 'Permutació: ' . $perm_n
+
+%# Escriure Pregunta {{{
+% my $i = 1;
+% while ( my $set = $permutacio->hash) {
+%   my $n_preg   = $set->{'id_pregunta'};
+
+	<div style="page-break-inside: avoid; padding: 0; margin: 0; ">
+	%# Escrivim la pregunta:
+	<p style="margin: 10px 0 0 0"><%= "$i.- " %>
+
+	%# Escriure resposta {{{
+
+	% my @respostes;
+  % my @opcions = qw(a b c d);
+  % foreach my $n_resp ( $set->{'resp_a'}, $set->{'resp_b'}, $set->{'resp_c'}, $set->{'resp_d'} ) {
+
+  %	  my $resps = $self->model->resposta($n_resp)->hash;
+
+	% 	my $correcte = "";
+  % 	$correcte = $resps->{'correcte'};
+  %   if ( $correcte ) {
+        <strong><u><%= shift @opcions %></u></strong>
+  %   } else {
+        <%= shift @opcions %>
+  %   }
+
+	% }
+  </p>
+
+	</div>
+	%# }}}
+
+
+	% $i++;
+% }
+
+%# }}}
+
+%# vim: tabstop=2  

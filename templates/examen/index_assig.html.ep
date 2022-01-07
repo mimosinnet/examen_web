@@ -1,0 +1,25 @@
+% layout 'default';
+
+%= t h1 => "Examen de " . $bloc->assig_nom;
+
+<ul>
+	<li>Blocs: 
+    % for my $i ( 1 .. $bloc->blocs ) {
+    <a href="<%= "/$id_assig/preguntes/bloc/$i" %>" style="background-color:<%= $bloc->color->{$i} %>"><%= $bloc->name->{$i} %></a> ( <%= $bloc->n_pregs->{$i} %> ),
+    % }
+	</li>
+	<li>Llistat de Preguntes: 
+    % for my $i ( 1 .. $bloc->blocs ) {
+    <a href="<%= "/$id_assig/full_tots/$i" %>" style="background-color:<%= $bloc->color->{$i} %>"><%= $bloc->name->{$i} %></a>,
+    % }
+    <a href="<%= "/$id_assig/full_tots/0" %>"  style="background-color:orange">Totes</a>,
+	</li>
+  <li>Preguntes de l'examen <a href=/<%= $id_assig %>/preguntes/examen/1><%= $bloc->assig_nom %></a></li>
+  <li>Format AIKEN: <a href="<%= "/$id_assig/full_aiken/cat" %> ">català</a>, <a href="<%= "/$id_assig/full_aiken/cas" %> ">castellà</a>.</li>
+  <li>Format GIFT: <a href="<%= "/$id_assig/full_gift/cat" %> ">català</a>, <a href="<%= "/$id_assig/full_gift/cas" %> ">castellà</a>.</li>
+  <li><a href=/<%= $id_assig %>/afegir>Afegir pregunta</a></li>
+	<li><a href=/<%= $id_assig %>/permutacions>Crear permutacions</a></li>
+	<li><a href=/<%= $id_assig %>/fulls_llista>Fulls d'examen</a></li>
+</ul>
+
+%#  vim:  tabstop=2

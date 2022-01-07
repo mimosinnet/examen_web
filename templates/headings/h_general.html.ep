@@ -1,41 +1,47 @@
 %# appears in all pages
 %# included in default lauyout
 
+%# Set number of blocs and name of each bloc
+% my $blocs = $self->model->bloc_count($id_assig); 
+% my (%bloc_name, %bloc_color);
+% for my $i ( 1 .. $blocs) {
+%   $bloc_name{$i}  = $self->model->bloc_nom($id_assig,$i);
+%   $bloc_color{$i} = $self->model->bloc_color($id_assig,$i);
+% }
+
+
 %# Variables {{{
 %# Fer el recompte de preguntes per examen i de preguntes per examen per bloc
-% my (@n_examen, @n_examen_bloc);
-% foreach my $examen (1..2) { 
-	% push @n_examen, $self->m_examen->count_examen($examen);
-	% foreach my $bloc (1..3) {
-		% push @n_examen_bloc, $self->m_examen->count_examen_bloc($examen,$bloc);
-	% }
+% my ($n_examen, @n_examen_bloc);
+% $n_examen = $self->model->count_exam($id_assig);
+% foreach my $bloc ( 1 .. $blocs ) {
+%   push @n_examen_bloc, $self->model->count_exam_bloc($id_assig,$bloc);
 % }
 
 %# Escriure el missatge:
-% my $message = "$n_examen[0] preguntes diürn (" .
-%	"$n_examen_bloc[0] $n_examen_bloc[1] $n_examen_bloc[2]) " .
-% "$n_examen[1] preguntes nocturn (" .
-%	"$n_examen_bloc[3] $n_examen_bloc[4] $n_examen_bloc[5])";
+% my $message = "$n_examen Preg. ( ";
+% foreach my $bloc ( 1 .. $blocs ) {
+%#  Les matrius comencen a comptar per 0
+%   $message .= "$n_examen_bloc[$bloc-1] ";
+% }
+% $message .= ')';
 %# }}}
 
 %# Table {{{
 <div id="head">
 <table align="right" class="heading">
 	<tr>
-		<td><%= link_to Principal => '/index' %></td>
+		<td><%= link_to Principal => "/$id_assig/index" %></td>
 		<td>|</td>
-		<td>Bloc</td>
-		<td><%= link_to 1 => '/preguntes/bloc/1' %></td>
-		<td><%= link_to 2 => '/preguntes/bloc/2' %></td>
-		<td><%= link_to 3 => '/preguntes/bloc/3' %></td>
-		<td>|</td>
-		<td>Examen</td>
-		<td><%= link_to Diürn   => '/preguntes/examen/1' %></td>
-		<td><%= link_to Nocturn => '/preguntes/examen/2' %></td>
-		<td>|</td>
-		<td><%= link_to 'Afegir Pregunta' => '/afegir' %></td>
+    % for my $i (1 .. $blocs) { 
+		  <td style="background-color:<%= $bloc_color{$i} %>"   ><%= link_to $bloc_name{$i} => "/$id_assig/preguntes/bloc/$i" %></td>
+    % }
 		<td>|</td>
 		<td class="error"><%== $message	%></td>
+		<td>|</td>
+		<td><%= link_to Examen => "/$id_assig/preguntes/examen/1" %></td>
+		<td>|</td>
+		<td><%= link_to 'Afegir Pregunta' => "/$id_assig/afegir" %></td>
 	</tr>
 </table>
 </div>

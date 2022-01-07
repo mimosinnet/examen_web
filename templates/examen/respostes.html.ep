@@ -1,38 +1,21 @@
 % layout 'default';
 % title 'Pregunta amb Respostes';
 
-%# Variables {{{
-%	my $pregs 	  = $self->m_examen->find_pregunta($pregunta);
-%	my $resps 	  = $self->m_examen->find_respostes($pregunta);
-% my $bloc 		  = $pregs->bloc;
-% my $preg_cas	= $pregs->pregunta_cas;
-% my $preg_cat	= $pregs->pregunta_cat;
-% my $examen_1	= $pregs->examen;
-% my $examen_2	= $pregs->examen_2;
-
-% my $bloc_rs		= $self->m_examen->find_bloc($bloc);
-% my $next_rs;
-% while ($next_rs = $bloc_rs->next ) {
-% 	last if $next_rs->id_pregunta eq $pregunta;
-% }
-% $next_rs = $bloc_rs->next;
-% $next_rs = $bloc_rs->first unless defined $next_rs;
-% my $posterior = $next_rs->id_pregunta;
-%# }}}
-
 %# Taula inicial {{{
-<table>
+<table style="background-color:<%= $bloc_att->color->{$bloc} %>" >
+  <tr><th colspan="5"><%= link_to $assig->{'assig'} => "/$id_assig/index" %></th></tr>
+  <tr><th colspan="5"><%= link_to 'Bloc ' . $bloc_att->name->{$bloc} => "/$id_assig/preguntes/bloc/$bloc" %></th></tr>
 <tr>
-  <td><%= link_to "Bloc $bloc" => "/preguntes/bloc/$bloc" %></td>
+  <td><%= link_to "← $anterior..."            => "/$id_assig/respostes/$anterior" %></td>
   <td>|</td>
-  <td><%= link_to 'Editar'     => "/editar/$pregunta" %></td>
+  <td style="text-align:center"><%= link_to "Edita Pregunta $pregunta"  => "/$id_assig/editar/$pregunta" %></td>
   <td>|</td>
-  <td><%= link_to '→'         => "/respostes/$posterior" %></td>
+  <td><%= link_to "...$posterior →"           => "/$id_assig/respostes/$posterior" %></td>
 </tr>
 </table>
 %# }}}
 
-%= t p => "Bloc $bloc, Examen: Diürn: $examen_1 Nocturn: $examen_2"
+%= t p => "$assig->{'assig'}, Bloc $bloc"
 
 <table border="0">
 
@@ -47,11 +30,11 @@
 %# }}}
 
 %# Respostes {{{
-% while ( my $set = $resps->next) {
+% while ( my $set = $resps->hash) {
 
-	% my $resp_cat 	= $set->resposta_cat;
-	% my $resp_cas	= $set->resposta_cas;
-	% my $correct		= $set->correcte;
+  % my $resp_cat 	= $set->{'resposta_cat'};
+  % my $resp_cas	= $set->{'resposta_cas'};
+  % my $correct		= $set->{'correcte'};
 	% $correct =~ s/0/ /;
 	% $correct =~ s/1/→/;
 
@@ -69,5 +52,11 @@
 %# }}}
 
 </table>
+
+<p>Preguntes Bloc <%= $bloc %>: 
+  % for my $i ( @{$preg_bloc} ) {
+  %= link_to "$i " => "/$id_assig/respostes/$i"
+  % }
+</p>
 
 %# vim: tabstop=2  

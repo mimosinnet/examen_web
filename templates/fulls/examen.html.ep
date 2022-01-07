@@ -2,13 +2,6 @@
 % layout 'examen';
 % title "Examen";
 
-%# Variables {{{
-%	my $permutacions = $self->m_examen->permutacions($perm_n);
-% my $preguntes_rs = $self->m_examen->table('Pregunte');
-% my $respostes_rs = $self->m_examen->table('Resposte');
-% my $idioma = $permuta->idioma;
-%# }}}
-
 %# Encapçalament en funció de l'idioma {{{
 % if ( $idioma eq '1') {
 %=  include 'headings/h_examen_cat';
@@ -19,14 +12,12 @@
 
 %# Escriure Pregunta {{{
 % my $i = 1;
-% while ( my $set = $permutacions->next) {
-
-	% my $n_preg = $set->get_column('id_pregunta');
-	% my $pregunta_rs = $self->m_examen->find_pregunta($n_preg);
-
-	% my $pregunta;
-	% if ( $idioma eq '1') { $pregunta 	= $pregunta_rs->pregunta_cat; } 
-	% elsif ( $idioma eq '2') { $pregunta 	= $pregunta_rs->pregunta_cas; }
+% while ( my $set = $permutacio->hash) {
+%   my $n_preg   = $set->{'id_pregunta'};
+%   my $preguntes = $self->model->pregunta($n_preg);
+%   my $pregunta;
+%   if    ( $idioma eq '1') { $pregunta = $preguntes->{'pregunta_cat'}; } 
+%   elsif ( $idioma eq '2') { $pregunta = $preguntes->{'pregunta_cas'}; }
 
 	<div style="page-break-inside: avoid; padding: 0; margin: 0; ">
 	%# Escrivim la pregunta:
@@ -35,20 +26,21 @@
 	%# Escriure resposta {{{
 
 	% my @respostes;
-	% foreach my $n_resp ( $set->resp_a, $set->resp_b, $set->resp_c, $set->resp_d ) {
+  % foreach my $n_resp ( $set->{'resp_a'}, $set->{'resp_b'}, $set->{'resp_c'}, $set->{'resp_d'} ) {
 
-	%	my $resps_rs = $self->m_examen->find_resposta($n_resp);
+  %	  my $resps = $self->model->resposta($n_resp)->hash;
 
 	% 	my $correcte = "";
-	% 	$correcte = $resps_rs->correcte if $opcio eq 'docent';
+  % 	$correcte = $resps->{'correcte'} if $opcio eq 'docent';
 	%		$correcte =~ s/0//;
 	%		$correcte =~ s/1/→/;
 
  	% 	my $resp;
-	%		if ( $idioma eq '1') { $resp = $resps_rs->resposta_cat;}
-	% 	elsif ( $idioma eq '2') { $resp = $resps_rs->resposta_cas;}
+  %		if    ( $idioma eq '1') { $resp = $resps->{'resposta_cat'} }
+  % 	elsif ( $idioma eq '2') { $resp = $resps->{'resposta_cas'} }
 
 	%		push @respostes, "$correcte $resp";
+	%#		push @respostes, "$correcte $resp";
 
 	% }
 
